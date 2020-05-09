@@ -23,9 +23,9 @@ public class Movement implements KeyListener
     {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_SPACE:
-                UpdateGame.sterowanie(9);
+                Engine.sterowanie(9);
             case KeyEvent.VK_ENTER:
-                UpdateGame.sterowanie(10);
+                Engine.sterowanie(10);
         }
     }
 
@@ -59,10 +59,10 @@ public class Movement implements KeyListener
                 RIGHT = true;
                 break;
             case KeyEvent.VK_SPACE:
-                UpdateGame.sterowanie(9);
+                Engine.sterowanie(9);
                 break;
             case KeyEvent.VK_ENTER:
-                UpdateGame.sterowanie(10);
+                Engine.sterowanie(10);
                 break;
         }
     }
@@ -100,13 +100,13 @@ public class Movement implements KeyListener
 
     public void movement()
     {
-        if(W) UpdateGame.sterowanie(1);
-        if(S) UpdateGame.sterowanie(2);
-        if(UP) UpdateGame.sterowanie(3);
-        if(DOWN) UpdateGame.sterowanie(4);
-        if(A) UpdateGame.sterowanie(5);
-        if(D) UpdateGame.sterowanie(6);
-        if(LEFT) UpdateGame.sterowanie(7);
-        if(RIGHT) UpdateGame.sterowanie(8);
+        if(W) Engine.sterowanie(1);
+        if(S) Engine.sterowanie(2);
+        if(UP) Engine.sterowanie(3);
+        if(DOWN) Engine.sterowanie(4);
+        if(A) Engine.sterowanie(5);
+        if(D) Engine.sterowanie(6);
+        if(LEFT) Engine.sterowanie(7);
+        if(RIGHT) Engine.sterowanie(8);
     }
 }

@@ -1,4 +1,7 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class Cell extends GameObject
@@ -9,6 +12,7 @@ public class Cell extends GameObject
     private boolean isArmagedon = false;
     private boolean isAlive = true;
     private long lastbirth;
+    private Image spadekImage;
 
     public Cell(int x, int y, int size, boolean armegadonChance, boolean isChildren)
     {
@@ -23,6 +27,11 @@ public class Cell extends GameObject
         if(armegadonChance)
             if(random.nextInt(100) > 85)
                 isArmagedon = true;
+        try {
+            spadekImage = ImageIO.read(new File("src/images/spadek.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getCurrentValue()
@@ -160,10 +169,10 @@ public class Cell extends GameObject
         else
         {
             g.setColor(new Color(0x14149C));
-            g.fillRect(getRectangle().x, getRectangle().y, getRectangle().width, getRectangle().height);
+            g.drawImage(spadekImage, getRectangle().x, getRectangle().y, getRectangle().width, getRectangle().height, null);
             g.setFont(new Font("Arial Black", Font.ITALIC, getHeight() / 3));
             g.setColor(Color.black);
-            g.drawString(String.valueOf(currentValue), getX() - getWidth() / 7, getY() - getHeight() / 8);
+            g.drawString(String.valueOf(spadek), getX() - getWidth() / 6, getY() + getHeight() / 8);
         }
     }
 

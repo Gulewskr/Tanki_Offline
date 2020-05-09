@@ -6,7 +6,7 @@ public class Bullet extends GameObject {
     private final double angleVecY;
     private int vectorX;
     private int vectorY;
-    private final int speedScaling = 300;
+    private final int speedScaling = 300 * 3;
 
     public Bullet(int x, int y, int playerID, double velx, double vely , double velocity )
     {

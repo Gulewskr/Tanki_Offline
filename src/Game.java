@@ -14,7 +14,7 @@ public class Game extends Canvas implements Runnable
     private final int width = 1200;
     private final int height = 900;
     private  boolean running;
-    private final UpdateGame gra;
+    private final Engine gra;
     private int sekunda = 0;
     private int tick = 0;
     private final Movement movement = new Movement(this);
@@ -22,7 +22,7 @@ public class Game extends Canvas implements Runnable
     public Game()
     {
         Window window = new Window(width, height, this, "Tanki Offline");
-        gra = new UpdateGame(width, height, conf.getMap_width(), conf.getMap_height());
+        gra = new Engine(width, height, conf.getMap_width(), conf.getMap_height());
         gra.setBulletsLimit(conf.getMax_bullet_count());
     }
 
@@ -64,6 +64,8 @@ public class Game extends Canvas implements Runnable
                         gra.mapCellTick();
                     if(sekunda % conf.getNew_object_spawn_time() == 0)
                         gra.newRandomCell();
+                    if(sekunda%30 == 0)
+                        gra.score();
                 }
             }
             if(running)

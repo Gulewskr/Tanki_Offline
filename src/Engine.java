@@ -1,10 +1,8 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class UpdateGame
+public class Engine
 {
     private final static LinkedList<Cell> cells = new LinkedList<>();
     private final static LinkedList<Bullet> bulletsP1 = new LinkedList<>();
@@ -23,7 +21,7 @@ public class UpdateGame
     private static int bulletsLimit = 0;
 
 
-    public UpdateGame(int width, int heigt, int mapwidth, int mapheight)
+    public Engine(int width, int heigt, int mapwidth, int mapheight)
     {
         this.mapWidth = width/2 + mapwidth/2;
         this.mapHeight = heigt/2 + mapheight/2;
@@ -69,13 +67,16 @@ public class UpdateGame
                 bulletsP1.remove(i);
             else {
                 int tmp = physics.bulletCollision(bulletsP1.get(i), cells);
-                if (tmp != -1) {
+                if (tmp != -1)
+                {
                     bulletsP1.remove(i);
                     int p = cells.get(tmp).decreaseValue();
                     if(p > 0)
                     {
                         cells.remove(tmp);
+                        tankP1.addPoints(p);
                     }
+                    else tankP1.addPoints(-p);
                 }
             }
         }
@@ -91,10 +92,17 @@ public class UpdateGame
                     if(p > 0)
                     {
                         cells.remove(tmp);
+                        tankP2.addPoints(p);
                     }
+                    else tankP2.addPoints(-p);
                 }
             }
         }
+    }
+
+    public void score()
+    {
+        System.out.println("P1 = " + tankP1.getScore() + "   P2 =" + tankP2.getScore());
     }
 
     public void increaseSpeed(double percent)
@@ -114,7 +122,7 @@ public class UpdateGame
 
     private static boolean increaseBulletSpeed(double procent)
     {
-        velocity *= (100 - procent)/100;
+        velocity *= ((100 - procent)/100 +1);
         if(velocity > startVelocity * 3)
         {
             velocity = startVelocity * 3;
@@ -229,10 +237,10 @@ public class UpdateGame
     {
         switch(option)
         {
-            case 1: physics.move(0,-3, tankP1); break;
-            case 2: physics.move(0,3, tankP1); break;
-            case 3: physics.move(0,-3, tankP2); break;
-            case 4: physics.move(0,3, tankP2); break;
+            case 1: physics.move(0,-3, tankP1); tankP1.changeImage(); break;
+            case 2: physics.move(0,3, tankP1); tankP1.changeImage(); break;
+            case 3: physics.move(0,-3, tankP2); tankP2.changeImage(); break;
+            case 4: physics.move(0,3, tankP2); tankP2.changeImage(); break;
             case 5: tankP1.changeAngle(2); break;
             case 6: tankP1.changeAngle(-2);break;
             case 7: tankP2.changeAngle(2);break;

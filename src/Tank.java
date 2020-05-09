@@ -1,32 +1,53 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.io.File;
+import java.io.IOException;
 
 public class Tank extends GameObject{
     private int angle;
     private int score = 0;
     private int owner;
-    private final int cannonHeight = 30;
+    private final int cannonHeight = 40;
     private final int cannonWidth = 20;
+    private Image tankImage1;
+    private Image tankImage2;
+    private Image tankImage ;
+    private Image cannonImage;
 
     public Tank(int owner, int x ,int y)
     {
-        super( x, y, 40 , 80);
+        super( x, y, 40 , 60);
         this.owner = owner;
         if(owner == 1)
         {
-            changePosition(x - 20, y);
+            changePosition(x - getWidth()/2, y);
             angle = -90;
         }
         else if(owner == 2)
         {
-            changePosition(x + 20, y);
+            changePosition(x + getWidth()/2, y);
             angle = 90;
         }
         else{
             System.out.println("Uknown owner in Tank object (must be 1 or 2)");
         }
+        try {
+            tankImage2 = ImageIO.read(new File("src/images/tank2.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            tankImage1 = ImageIO.read(new File("src/images/tank1.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            cannonImage = ImageIO.read(new File("src/images/cannon.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        tankImage = tankImage1;
     }
 
     public void changeAngle(int kat)
@@ -55,7 +76,7 @@ public class Tank extends GameObject{
     {
         //czołg
         g.setColor(new Color(52305));
-        g.fillRect(getRectangle().x, getRectangle().y, getRectangle().width, getRectangle().height);
+        g.drawImage(tankImage,getRectangle().x, getRectangle().y, getRectangle().width, getRectangle().height, null);
         //działo
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
@@ -63,7 +84,7 @@ public class Tank extends GameObject{
         g2d.setTransform(at);
         g2d.rotate(Math.toRadians(angle));
         g2d.setColor(Color.blue);
-        g2d.fillRect(-cannonWidth/2, 0, cannonWidth, cannonHeight);
+        g2d.drawImage(cannonImage,-cannonWidth/2, -10, cannonWidth, cannonHeight, null);
         g2d.setTransform(old);
     }
 
@@ -86,15 +107,22 @@ public class Tank extends GameObject{
         score += points;
     }
 
-    //Nieużywane
-    /*
-    public int getAngle() {
-        return angle;
+    public void changeImage()
+    {
+        if(tankImage == tankImage1)
+            tankImage = tankImage2;
+        else tankImage = tankImage1;
     }
 
     public int getScore()
     {
         return score;
     }
+
+    //Nieużywane
+    /*
+    public int getAngle() {
+        return angle;
+     }
      */
 }
